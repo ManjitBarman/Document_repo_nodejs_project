@@ -1,0 +1,89 @@
+/* stylesheet for home page of the project */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(#fcf5f8, #edeaf8, #eaf3fc, #dae8fa, #eaf3fc, #edeaf8, #fcf5f8);
+    height: auto;
+}
+
+span#main-icon {
+    font-size: 32px;
+    color: #001f7c;
+}
+
+span#title {
+    font-weight: bolder;
+    font-size: 27px;
+    padding: 0 5px;
+    color: #001f7c;
+}
+
+li.menu_items,
+li.menu_items a {
+    color: rgb(8 21 206);
+    font-weight: bold;
+}
+
+li.menu_items i {
+    padding: 0 7px 0 0;
+}
+
+div.main_title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 98%;
+    height: auto;
+    margin: 90px auto;
+}
+
+.coll-1,
+.coll-2 {
+    /* height: 200px; */
+    margin: 0;
+}
+
+.coll-2 {
+    width: 70%;
+}
+
+.coll-1 {
+    width: 30%;
+}
+
+img.banner {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 400px;
+}
+
+footer {
+    margin-bottom: 12px;
+}
+
+footer p {
+    color: gray;
+    text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    div.main_title {
+        flex-wrap: wrap;
+    }
+
+    .coll-1,
+    .coll-2 {
+        width: 100%;
+    }
+
+    /* .coll-1 {
+        height: 20vh;
+    } */
+}
