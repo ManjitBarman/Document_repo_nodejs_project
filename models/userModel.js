@@ -17,15 +17,15 @@ const userSchema= new mongoose.Schema({
     },
 
     is_admin:{
-        type:Number,
+        type:Boolean,
         default:true
     },
-    is_varified:{
-        type:Number,
-        default:1
+    is_verified:{
+        type:Boolean,
+        default:false
     },
     phone:{
-        type:Number,
+        type:String,
         required:true,
         unique: true,
         maxlength: [10, 'Phone number cannot be longer than 10 digits.']
