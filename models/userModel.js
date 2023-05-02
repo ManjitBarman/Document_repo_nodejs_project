@@ -31,6 +31,12 @@ const userSchema= new mongoose.Schema({
         maxlength: [10, 'Phone number cannot be longer than 10 digits.']
     },
 
+    role:{
+        type:String,
+        required:true
+    }
+  
+
 })
 
 module.exports= mongoose.model("user",userSchema)

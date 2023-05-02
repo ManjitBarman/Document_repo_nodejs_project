@@ -21,7 +21,7 @@ const isLogout= async(req,resp,next)=>{
     try {
 
         if(req.session.user_id){
-            resp.redirect('dashboard')
+            resp.redirect('hod_profile')
         }
         next();
     } catch (error) {

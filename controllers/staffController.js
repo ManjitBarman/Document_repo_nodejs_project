@@ -2,13 +2,13 @@ const User = require("../models/userModel");
 const bcrypt = require('bcrypt');
 
 
-//login user method started
+//login staff method started
 const loginLoad = async (req, resp) => {
 
     try {
-        resp.render("login");
+        resp.render("staffLogin");
     } catch (error) {
-        console.log(error.message);
+        console.log(error.message); 
     }
 }
 
@@ -24,22 +24,22 @@ const verifyLogin = async (req, resp) => {
         //checking of userdata
         if (userData) {
             const passwordMatch = await bcrypt.compare(password, userData.password)
-            if (passwordMatch) {
+            if (passwordMatch && userData.role ==='staff') {
 
-                if (!userData.is_verified) {
-                    resp.render('login', { message: "Please verify your mail" })
+                if (!userData.is_verified ) {
+                    resp.render('staffLogin', { message: "Please verify your mail" })
                 } else {
                     
-                    req.session.user_id=userData._id;
-                    resp.redirect('dashboard')
+                    req.session.user_id= userData._id;
+                    resp.redirect(302,'staff_profile');
                 }
 
             } else {
-                resp.render('login', { message: "Email and password are incorect" });
+                resp.render('staffLogin', { message: "Email and password are incorect" });
             }
 
         } else {
-            resp.render('login', { message: "Email and password are incorect" });
+            resp.render('staffLogin', { message: "Email and password are incorect" });
         }
 
 
@@ -48,8 +48,8 @@ const verifyLogin = async (req, resp) => {
     }
 }
 
-//user logout
-const userLogout=async(req,resp)=>{
+//admin logout
+const staffLogout=async(req,resp)=>{
     try {
 
         req.session.destroy();
@@ -61,10 +61,12 @@ const userLogout=async(req,resp)=>{
     }
 }
 
-//dshboard load
-const getDashboard = async (req, resp) => {
+//Profile load
+const getProfile = async (req, resp) => {
     try {
-        resp.render('dashboard')
+
+        const staffData= await User.findById({_id:req.session.user_id});
+        resp.render('staffProfile',{user:staffData})
     } catch {
         console.log(error.message);
     }
@@ -75,6 +77,6 @@ const getDashboard = async (req, resp) => {
 module.exports = {
     loginLoad,
     verifyLogin,
-    getDashboard,
-    userLogout
+    getProfile,
+    staffLogout
 }

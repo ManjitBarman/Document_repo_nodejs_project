@@ -2,7 +2,7 @@ const express = require('express');
 const home_route= express();
 // const path = require('path')
 const homeController= require("../controllers/homeController");
-const auth=require("../middleware/auth");
+const auth=require("../middleware/adminAuth");
 
 //session
 const session = require('express-session');

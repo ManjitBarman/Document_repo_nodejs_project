@@ -1,0 +1,30 @@
+nav {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.cont {
+    /* justify-content: center; */
+    flex-wrap: wrap;
+}
+.main_box_1 {
+    border: 1px solid gray;
+    height: auto;
+    width: 10em;
+}
+
+.main_box_2 {
+    border: 1px solid gray;
+    height: auto;
+    width: 20em;
+}
+
+@media screen and (max-width: 750px) {
+    div.chng_btn button {
+        width: 100%;
+    }
+
+    .main_box_1, .main_box_2 {
+        width: 100%;
+        margin-bottom: 3px;
+    }
+}
