@@ -25,6 +25,15 @@ admin_route.post('/admin_login',adminController.verifyLogin);
 admin_route.get('/admin_dashboard',auth.isLogin,adminController.profile_Load);
 admin_route.get('/admin_logout',auth.isLogin,adminController.adminLogout);
 admin_route.get('/add_user',auth.isLogin,adminController.addUserLoad);
+admin_route.get('/add_one_user',auth.isLogin,adminController.addOneUserLoad);
+admin_route.post('/add_one_user',adminController.addUser);
+admin_route.get('/verify',adminController.verifyMail);
+
+
+admin_route.get('*',function(req,resp){
+    resp.redirect('/admin');
+});
+
 
 
 
