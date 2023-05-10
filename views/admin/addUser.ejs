@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +15,8 @@
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Ubuntu:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Ubuntu:wght@300;500&display=swap"
+        rel="stylesheet">
 
     <!-- ===== CSS ===== -->
     <link rel="stylesheet" href="../../public/css/profile_sidebar.css">
@@ -35,66 +35,89 @@
             background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
         }
     </style> -->
+
+<!-- modal position -->
 </head>
 
 <body id="body-pd">
 
     <%- include('./layouts/navbar') %>
 
-    <div class="container pt-4">
-        <h4 class="text-primary text-center">Add user into the database</h4>
-    </div>
-
-    <!-- add students -->
-    <h5 class="my-4 p-1 text-bold" style="font-family: 'Ubuntu', sans-serif;">Add students</h5>
-    <div class="cont d-flex" style="font-family: 'Ubuntu', sans-serif;">
-        <div class="box_individual main_box_1 bg-light shadow-sm mx-1 py-2 text-center text-light text-primary border border-4 border-danger border-bottom-0 border-top-0 border-end-0 rounded-end">
-            <h6 class="text-dark">ADD</h6>
-            <p class="text-dark">Add one by one</p>
-            <button id="add_student_one" class="border border-0"><i class="bi bi-plus-lg "></i></button>
+        <div class="container pt-4">
+            <h4 class="text-primary text-center">Add user into the database</h4>
         </div>
-        <div class="box_group main_box_2 mx-1 bg-light shadow-sm py-2 text-center text-light text-primary border border-4 border-success border-bottom-0 border-top-0 border-end-0 rounded-end">
-            <h6 class="text-dark">ADD</h6>
-            <p class="text-dark">Select from a sheet</p>
-            <button class="border border-0" id="select_student_all"><i class="bi bi-plus-lg"></i></button>
+
+        <!-- add students -->
+        <h5 class="my-4 p-1 text-bold" style="font-family: 'Ubuntu', sans-serif;">Add Users</h5>
+        <div class="cont d-flex" style="font-family: 'Ubuntu', sans-serif;">
+            <div
+                class="box_individual main_box_1 bg-light shadow-sm mx-1 py-2 text-center text-light text-primary border border-4 border-danger border-bottom-0 border-top-0 border-end-0 rounded-end">
+                <h6 class="text-dark">ADD</h6>
+                <p class="text-dark">Add one by one</p>
+                <button id="add_one_user" class="border border-0"><i class="bi bi-plus-lg "></i></button>
+            </div>
+            <div
+                class="box_group main_box_2 mx-1 bg-light shadow-sm py-2 text-center text-light text-primary border border-4 border-success border-bottom-0 border-top-0 border-end-0 rounded-end">
+                <h6 class="text-dark">ADD</h6>
+                <p class="text-dark">Select from a sheet</p>
+                <button class="border border-0" id="border border-0"><i class="bi bi-plus-lg"></i></button>
+            </div>
         </div>
-    </div>
 
-    <!-- <hr class="featurette-divider"> -->
+        <!-- add category -->
 
-    <div class="mb-5"></div>
+        <h5 class="my-4 p-1 text-bold" style="font-family: 'Ubuntu', sans-serif;">Add Category and assign Folder</h5>
+        <div class="cont d-flex" style="font-family: 'Ubuntu', sans-serif;">
+            <div
+                class="box_individual main_box_1 bg-light shadow-sm mx-1 py-2 text-center text-light text-primary border border-4 border-danger border-bottom-0 border-top-0 border-end-0 rounded-end">
+                <h6 class="text-dark">ADD</h6>
+                <p class="text-dark">Category</p>
+                <button id="add-category" class="border border-0"><i class="bi bi-plus-lg "></i></button>
+            </div>
+            <div
+                class="box_group main_box_2 mx-1 bg-light shadow-sm py-2 text-center text-light text-primary border border-4 border-success border-bottom-0 border-top-0 border-end-0 rounded-end">
+                <h6 class="text-dark">ADD</h6>
+                <p class="text-dark"> Folder within Category</p>
+                <button id="add-folder" class="border border-0" id="border border-0"><i class="bi bi-plus-lg"></i></button>
+            </div>
+        </div>
 
+        <!-- <hr class="featurette-divider"> -->
 
-    <!--===== MAIN JS =====-->
-    <script src="../../public//JS/profile_sidebar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    <script src="../script/jquery.js"></script>
-    <script>
-        $(document).ready(function() {
-            // script for logout
-            $("#logoutbtn").click(function() {
-                window.location.replace("admin_logout");
+        <div class="mb-5"></div>
+
+        <!-- Button to open the modal -->
+ 
+
+        <!--===== MAIN JS =====-->
+        <script src="../../public//JS/profile_sidebar.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <script src="../script/jquery.js"></script>
+        <script>
+            $(document).ready(function () {
+                // script for logout
+                $("#logoutbtn").click(function () {
+                    window.location.replace("admin_logout");
+                })
+
+                $("#add_one_user").click(function () {
+                    window.location.replace("add_one_user");
+
+                })
+
+                $("#add-category").click(function () {
+                    window.location.replace("add_category");
+
+                })
+
+                $("#add-folder").click(function () {
+                    window.location.replace("add_folder");
+
+                })
             })
+        </script>
 
-            $("#add_student_one").click(function() {
-                window.location.replace("add_one_user");
 
-            })  
-
-            $("#add_mentor_one").click(function() {
-                window.location.replace("others/add_mentor");
-
-            })
-
-            $("#select_student_all").click(function() {
-                window.location.replace("files/student.php");
-            })
-
-            $("#select_mentor_all").click(function() {
-                window.location.replace("files/mentor");
-            })
-        })
-    </script>
 </body>
 
 </html>

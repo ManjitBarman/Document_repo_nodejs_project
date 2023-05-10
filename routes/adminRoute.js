@@ -28,10 +28,17 @@ admin_route.get('/add_user',auth.isLogin,adminController.addUserLoad);
 admin_route.get('/add_one_user',auth.isLogin,adminController.addOneUserLoad);
 admin_route.post('/add_one_user',adminController.addUser);
 admin_route.get('/verify',adminController.verifyMail);
+admin_route.get('/show_user_list',auth.isLogin,adminController.userListLoad);
+admin_route.get('/edit_user',auth.isLogin,adminController.editUserLoad);
+admin_route.get('/add_category',auth.isLogin,adminController.CategoryLoad);
+admin_route.post('/add_category',adminController.addCategory);
+admin_route.get('/add_folder',auth.isLogin,adminController.folderLoad);
+admin_route.post('/add_folder',adminController.addFolder); 
+
 
 
 admin_route.get('*',function(req,resp){
-    resp.redirect('/admin');
+    resp.redirect('admin_login');
 });
 
 

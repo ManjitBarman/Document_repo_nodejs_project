@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || '3000'
 const DATABASE_URL= process.env.DATABASE_URL || "mongodb://127.0.0.1:27017";
 
+
 const homeRoute = require("./routes/homeRoute");
 const adminRoute = require("./routes/adminRoute");
 const staffRoute = require("./routes/staffRoute");

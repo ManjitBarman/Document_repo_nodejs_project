@@ -23,8 +23,16 @@ hod_route.use(bodyParser.urlencoded({extended:true}));
 hod_route.get('/hod_login',auth.isLogout,hodController.loginLoad);
 hod_route.post('/hod_login',hodController.verifyLogin);
 hod_route.get('/hod_profile',auth.isLogin,hodController.profile_Load);
-hod_route.get('/hod_logout',auth.isLogin,hodController.adminLogout);
+hod_route.get('/hod_logout',auth.isLogin,hodController.hodLogout);
 hod_route.get('/add_user',auth.isLogin,hodController.addUserLoad);
+hod_route.get('/add_user',auth.isLogin,hodController.addUserLoad);
+hod_route.get('/add_user',auth.isLogin,hodController.addUserLoad);
+hod_route.post('/add_user',hodController.addUser);
+hod_route.get('/verify',hodController.verifyMail);
+hod_route.get('/show_user_list',auth.isLogin,hodController.userListLoad);
+
+
+
 
 
 
