@@ -1,0 +1,274 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>upload</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- ===== BOX ICONS ===== -->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Ubuntu:wght@300;500&display=swap" rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+     
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../public/css/profile_sidebar.css">
+    <link rel="stylesheet" href="../../public/css/bg_color.css">
+    <link rel="stylesheet" href="../../public/css/button.css">
+    <!-- <link rel="stylesheet" href="../style/popup_style.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <style>
+
+            div .instruction{
+                margin-left: 10%;
+            }
+             
+             .list li{
+                padding-left: 5px;
+                margin-top: 15px;
+               
+            }
+
+        </style>
+</head>
+
+
+
+<body id="body-pd">
+
+    
+    <%- include('./layouts/navbar') %>
+
+    <%
+    if(typeof message!=='undefined'){
+      %>
+      <div class=" alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error....</strong> '<%=message  %>'
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+      <%
+    }
+     %>
+
+    <!-- sucess alert  -->
+    <%
+    if(typeof sucess!=='undefined'){
+      %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Success..</strong> '<%=sucess  %>'.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+      <%
+    }
+     %>
+
+
+
+
+    <div class="container card shadow mt-5">
+        <section class="main">
+            <div class="my-4 px-3">
+                <h4 style="color: blue;">Upload File</h4>
+                <hr class="mb-3">
+            </div>
+
+            <div class="form p-1 mb-1 ">
+                <form method="post" action="admin_upload" enctype="multipart/form-data"  >
+
+                   
+                    <div class="row mt-0">
+                        <div class="col-sm-9" style="border-right: 1px solid rgb(202, 202, 202)">
+                            <div>
+                                
+
+                            <div class="form-group  px-5 py-2 mt-1">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="documentTitle">Document Title</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control border-bottom border-secondary"
+                                            style=" border-style: none; background:transparent"
+                                            placeholder="Enter your Document Title" name="title" required >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group  px-5 py-2">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="documentNumber">Document Number</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control border-bottom border-secondary"
+                                            style="border-style: none; background:transparent"
+                                            placeholder="Enter your Document Number" name="documentNo" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group px-5 py-2">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="keyword">Keyword</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="tel" class="form-control border-bottom border-secondary"
+                                            style=" border-style: none;background:transparent;"
+                                            placeholder="Enter your Keyword" name="keyword">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group px-5 py-2">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="document">Document</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="file" class="form-control border-bottom border-secondary"
+                                            style=" border-style: none; background:transparent" name="docname" accept=".jpg, .jpeg, .xls" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group px-5 py-2">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="catagory">Catagory</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select id="category" name="catId" class="w-100 border-bottom border-secondary" style=" border-style: none; background:transparent">
+                                            <option value="category" disabled selected>Choose Catagory</option>
+                                            <% categories.forEach((item) => { %>
+                                                <option value="<%= item._id %>"><%= item.category_name %></option>            
+                                            <% }) %>
+                                          
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group px-5 py-2">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="folder">Folder</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select id="folder" name="foldId" class="w-100 border-bottom border-secondary"
+                                            style=" border-style: none; background:transparent">
+                                            <option value="folder" disabled selected>Choose Folder</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group  px-5 my-2">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Document date</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="date" class="form-control border-bottom border-secondary"
+                                        style="border-style: none; background:transparent";
+                                        placeholder=" " name="date" required value="">
+                                </div>
+                            </div>
+                        </div>
+
+
+                            <div class="form-group px-5 pt-3">
+                                <div class="row">
+
+                                    <center>
+                                        <button type="submit" name="submit" class="btn btn-success ms-8 w-25"
+                                            id="submit_btn">&emsp;Upload</i></button>
+                                    </center>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col-sm-3 " >
+                            <div class="instruction py-3">
+                                <h5 style="color: red">INSTRUCTION</h5>
+                                <ul class="list">
+                                    <li>File size maximum 16 MB</li>
+                                    <li>File type should be jpeg,jpg and pdf</li>
+                                    <li>IIn case of student document insert rollno or programe for search</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="../../public/JS/profile_sidebar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"crossorigin="anonymous"></script>
+
+    <!-- Include the following JavaScript code to dynamically update the folder dropdown based on the selected category -->
+    <script>
+        const categoryDropdown = document.getElementById('category');
+        const folderDropdown = document.getElementById('folder');
+      
+        // Event listener for category dropdown change
+        categoryDropdown.addEventListener('change', function () {
+          const selectedCategoryId = categoryDropdown.value;
+      
+          // Clear the folder dropdown options
+          folderDropdown.innerHTML = '<option value=""  selected>Choose Folder</option>';
+      
+          // Fetch folders based on selected category using AJAX
+          fetch('get_folders/' + selectedCategoryId) // Update the URL to include the correct path
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              // Populate the folder dropdown with the fetched folders
+              data.folders.forEach(folder => {
+                const option = document.createElement('option');
+                option.value = folder._id;
+                option.textContent = folder.folder_name;
+                folderDropdown.appendChild(option);
+              });
+            })
+            .catch(error => {
+              console.log('Error:', error);
+              // Handle the error gracefully
+              // ...
+            });
+        });
+      </script>
+
+
+</body>
+
+</html>

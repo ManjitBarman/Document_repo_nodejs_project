@@ -12,7 +12,6 @@ const categorySchema = new mongoose.Schema({
     folder_name:{
         type:String,
         required:true,
-        unique: true,
     },
     folder_no:{
         type:String,
