@@ -15,7 +15,7 @@ const documentSchema = new mongoose.Schema({
         ref:'folder'
     }], 
 
-    file_name:{
+    doc_name:{
         type:String,
         required:true
     },
@@ -41,7 +41,7 @@ const documentSchema = new mongoose.Schema({
     file_path:{
         type:String,
     },
-    file_size:{
+    doc_size:{
         type:String
     }
 

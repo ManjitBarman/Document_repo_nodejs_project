@@ -447,13 +447,13 @@ const adminUpload = async (req, resp) => {
                 const document = new Document({
                     category_id: folder.category_id,
                     folder_id: folder._id,
-                    file_name: docName,
+                    doc_name: docName,
                     doc_title: docTitle,
                     document_no: docNo,
                     keyword: keyword,
                     document_date: docDate,
                     file_path: docPath,
-                    file_size: docSize
+                    doc_size: docSize
                 });
     
                 const documentData = await document.save();
@@ -478,6 +478,29 @@ const adminUpload = async (req, resp) => {
        
 };
 
+const docDetailsLoad = async (req, resp) => {
+    try {
+        const categoryData = await Category.find();
+        const folderData = await Folder.find().populate('category_id');   
+        
+        const documentData = await Document.find().populate({
+            path: 'folder_id',
+            populate: {
+              path: 'category_id',
+              model: 'category',
+            },
+          });
+        //   console.log(documentData)
+
+        resp.render('docDetails', { categoryData, folderData,documentData });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
+
+
 
 module.exports = {
     loginLoad,
@@ -497,6 +520,7 @@ module.exports = {
     addFolder,
     uploadDocLoad,
     adminUpload,
-    getFoldersByCategory
+    getFoldersByCategory,
+    docDetailsLoad
     
 }

@@ -1,4 +1,11 @@
 const User = require("../models/userModel");
+const Category = require('../models/categoryModel')
+const Folder = require('../models/foderModel')
+const Document = require("../models/documentModel")
+const {validationResult}= require('express-validator');
+
+
+
 const bcrypt = require('bcrypt');
 const randomString = require("randomstring");
 const nodemailer = require('nodemailer');
@@ -186,7 +193,6 @@ const verifyMail = async(req,resp)=>{
 }
 
 
-
 //Load userlist
 const userListLoad= async(req,resp)=>{
     try {
@@ -211,6 +217,108 @@ const hodLogout=async(req,resp)=>{
     }
 }
 
+const uploadDocLoad = async (req, resp) => {
+    try {
+
+      const categories = await Category.find();
+      const folders = await Folder.find();
+      const success = req.query.success === 'true';
+      resp.render('hodUpload', { categories, folders,success });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // get folders by category
+const getFoldersByCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        const folders = await Folder.find({ category_id: categoryId }).exec();
+
+        res.setHeader('Content-Type', 'application/json');
+    
+        res.status(200).json({ folders });
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+ 
+  // upload file and validation
+
+const hodUpload = async (req, resp) => {
+    try {
+        const errors = validationResult(req);
+
+        const categories = await Category.find(); // to fix error 
+        if (!errors.isEmpty()) {
+            return resp.render('hodUpload', { message:'Please upload doc,jpeg,jpg orpdf',categories});
+          }
+
+
+        const categoryId = req.body.catId;
+        const folderId = req.body.foldId;
+        const docTitle = req.body.title;
+        const docNo = req.body.documentNo;
+        const docName = req.file.filename;
+        const keyword = req.body.keyword;
+        const docDate = req.body.date;
+        const docPath = req.file.path;
+        const docSize = req.file.size;
+
+
+        // Check file size (in bytes)
+        const maxFileSize = 16 * 1024 * 1024; // 16 MB
+        const fileSize = req.file.size;
+
+        const folder = await Folder.findOne({ _id: folderId });
+        const docCount= await Document.countDocuments({document_no:docNo})
+
+        if ( (!folder) && (fileSize > maxFileSize) ) {
+            // Handle the case where category or folder is not found
+            return resp.render('hodUpload', { message: 'Category or folder not found',categories });
+        } 
+        else {
+
+            if(docCount > 0){
+
+                return resp.render('hodUpload', { message: 'document number already exist',categories });
+
+            }else{
+                const document = new Document({
+                    category_id: folder.category_id,
+                    folder_id: folder._id,
+                    file_name: docName,
+                    doc_title: docTitle,
+                    document_no: docNo,
+                    keyword: keyword,
+                    document_date: docDate,
+                    file_path: docPath,
+                    file_size: docSize
+                });
+    
+                const documentData = await document.save();
+    
+                if (documentData) {
+    
+                    return resp.render('hodUpload', { sucess: 'File uploaded sucessfully',categories });
+    
+                } else {
+    
+                    return resp.render('hodUpload', { message: 'Try again, something went wrong' });
+                }
+            }
+
+           
+          }
+        
+     }catch (error) {
+        console.log(error.message);
+    }
+
+       
+};
+
 module.exports = {
     loginLoad,
     verifyLogin,
@@ -219,5 +327,10 @@ module.exports = {
     addUserLoad,
     userListLoad,
     addUser,
-    verifyMail
+    verifyMail,
+    uploadDocLoad,
+    getFoldersByCategory,
+    hodUpload
+    
+    
 }

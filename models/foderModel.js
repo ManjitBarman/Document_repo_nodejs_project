@@ -25,4 +25,4 @@ const categorySchema = new mongoose.Schema({
     }
 })
 
-module.exports= mongoose.model("folders",categorySchema)
+module.exports= mongoose.model("folder",categorySchema)

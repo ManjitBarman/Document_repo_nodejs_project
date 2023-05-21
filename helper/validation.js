@@ -1,18 +1,3 @@
-// const {check}= require('express-validator');
-
-// exports.docValidation=[
-//     check('docname').custom((value,{req})=>{
-//         if(req.file.mimetype==='application/msword'
-//         ||file.mimetype ==='application/pdf'
-//         ||file.mimetype ==='image/jpg'
-//         ||file.mimetype ==='image/jpeg'){
-//             return true;
-//         }else{
-//             return false;
-//         }
-
-//     }).withMessage('Please upload doc,jpeg,jpg or pdf file')
-// ]
 
 const { check } = require('express-validator');
 

@@ -268,6 +268,34 @@
         });
       </script>
 
+<script>
+    $(document).ready(function () {
+      $('input[name="docname"]').on('change', function () {
+        const allowedExtensions = ['pdf', 'jpeg', 'jpg', 'doc'];
+        const maxFileSizeInBytes = 10 * 1024 * 1024; // 16MB
+  
+        const selectedFile = this.files[0];
+        const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+        const fileSize = selectedFile.size;
+  
+        // Check file extension
+        if (!allowedExtensions.includes(fileExtension)) {
+          alert('Invalid file extension. Allowed extensions are: pdf, jpeg, jpg, doc');
+          $(this).val(''); // Clear the file input
+          return;
+        }
+  
+        // Check file size
+        if (fileSize > maxFileSizeInBytes) {
+          alert('File size exceeds the limit of 16MB');
+          $(this).val(''); // Clear the file input
+          return;
+        }
+      });
+    });
+  </script>
+  
+
 
 </body>
 

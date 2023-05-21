@@ -73,6 +73,7 @@ admin_route.post('/add_folder',adminController.addFolder);
 admin_route.get('/admin_upload',auth.isLogin,adminController.uploadDocLoad);
 admin_route.get('/get_folders/:categoryId',auth.isLogin,adminController.getFoldersByCategory)
 admin_route.post('/admin_upload',upload.single('docname'),docValidation,adminController.adminUpload);
+admin_route.get('/doc_Details',auth.isLogin,adminController.docDetailsLoad);
 
 
 
