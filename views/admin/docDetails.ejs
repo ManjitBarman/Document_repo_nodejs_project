@@ -103,7 +103,7 @@
 
     <div class="container my-5" >
         <h3 class="py-3">Folder Details with Category</h3>
-        <table class="table" id="mentor_table">
+        <table class="table" id="folder_table">
             <thead>
                 <tr style="font-family: 'Ubuntu', sans-serif;">
                     <th scope="col">S.No</th>
@@ -151,7 +151,7 @@
     <!-- File Details -->
     <div class="container my-5">
         <h3 class="py-3">Document Details</h3>
-        <table class="table" id="category_table">
+        <table class="table" id="doc_table">
             <thead>
                 <tr style="font-family: 'Ubuntu', sans-serif;">
                     <th scope="col">S.No</th>
@@ -171,7 +171,7 @@
              <% if (documentData.length > 0) { %>
              <% for (let i = 0; i < documentData.length; i++) { %>
           <tr>
-            <td><%= j++ %></td>
+            <td scope="col"><%= j++ %></td>
             <td><%= documentData[i].doc_name %></td>
             <td><%= documentData[i].folder_id[0].category_id[0].category_name %></td>
             <td><%= documentData[i].folder_id[0].folder_name %></td>
@@ -195,7 +195,7 @@
 
 
             <td>
-                <a href=""><button type="submit" class="edit_btn btn btn-outline-success mx-1 mb-1"><i class="bi bi-pen-fill"></i></button></a>
+                <a href="/public/uploadedFile/<%= documentData[i].doc_name %>" target="_blank"><button type="submit" class="view_btn btn btn-outline-primary mx-1 mb-1"><i class="bi bi-eye-fill"></i></button></a>
                 <button type="button" class="del_btn btn btn-outline-danger mx-1 mb-1"><i class="bi bi-trash3-fill"></i></button>
             </td>
           </tr>
@@ -227,7 +227,10 @@
         });
 
         $(document).ready(function() {
-            $('#mentor_table').DataTable();
+            $('#folder_table').DataTable();
+        });
+        $(document).ready(function() {
+            $('#doc_table').DataTable();
         });
 
     </script>
