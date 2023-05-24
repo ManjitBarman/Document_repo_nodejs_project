@@ -1,9 +1,20 @@
 
 
-    const getHomePage=(req,res)=>{
+ const getHomePage=(req,resp)=>{
         
         try{
-            res.render("index");
+            resp.render("index");
+
+        }catch(error){
+            console.log(error);
+        }
+    };
+    
+const getAboutPage=(req,resp)=>{
+        
+        try{
+            resp.render("aboutPage");
+
         }catch(error){
             console.log(error);
         }
@@ -11,5 +22,6 @@
 
 
 module.exports= {
-    getHomePage
+    getHomePage,
+    getAboutPage
 }

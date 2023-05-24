@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- ===== BOX ICONS ===== -->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+  
+    <!-- font-awesome icon link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="../../public/css/profile_sidebar.css">
+    <link rel="stylesheet" href="../../public/css/bg_color.css">
+    <link rel="stylesheet" href="../../public/css/button.css">
+    
+    <title>Faculty Search</title>
+    <style>
+        div.my_card {
+        background-color: #8EC5FC;
+        background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+
+        }
+    </style>
+</head>
+
+<body id="body-pd">
+
+    <%- include('./layouts/navbar') %>
+    
+        <!-- error alert  -->
+        <!-- <% if(typeof message!=='undefined' ){ %>
+            <div class=" alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error....</strong> '<%=message %>'
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+         <% } %> -->
+
+
+    <!-- search box -->
+    
+    <div class="container">
+        <h3 class="text-center text-primary p-2" style="font-family: 'Ubuntu', sans-serif;">Search Records By</h3>
+    </div>
+
+    <div class="container">
+        <div class="d-flex flex-row justify-content-center">
+            <div class="container my-3 py-3" style="font-family: 'Ubuntu', sans-serif;">
+                <form action="search_by_docno" method="POST">
+                    <label class="text-primary fs-5" for="document_id">Document no:</label><br>
+                    <input type="text" id="document_id" name="docNo" placeholder="Enter document No" required>
+                    <button class="btn btn-sm btn-outline-primary" name="search">Search Documents</button>
+                </form>
+            </div>
+            <div class="container my-3 py-3" style="font-family: 'Ubuntu', sans-serif;">
+                <form action="search_by_keyword" method="POST">
+                    <label class="text-primary fs-5" for="keyword">Search Keyword:</label><br>
+                    <input type="text" id="keyword" name="keyword" placeholder=" Enter search keyword" required>
+                    <button class="btn btn-sm btn-outline-primary" name="search">Search Documents</button>
+                </form>
+            </div>
+            <div class="container my-3 py-3" style="font-family: 'Ubuntu', sans-serif;">
+                <form action="search_by_filename" method="POST">
+                    <label class="text-primary fs-5" for="filename_id">File Name:</label><br>
+                    <input type="text" id="filename_id" name="filename" placeholder="Enter document title" required>
+                    <button class="btn btn-sm btn-outline-primary" name="search">Search Documents</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search result  -->
+    
+    <div class="container my-5">
+        <h3 class="py-3">Available document</h3>
+    
+        <table class="table" id="doc_table">
+            <thead>
+                <tr style="font-family: 'Ubuntu', sans-serif;">
+                    <th scope="col">Doc Name</th>
+                    <th scope="col">Category No</th>
+                    <th scope="col">Folder Name</th>
+                    <th scope="col">Document No</th>
+                    <th scope="col">Upload Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+
+                <% if (typeof documentInfo !== 'undefined' && documentInfo.length > 0) { %>
+                    <% for (let i = 0; i < documentInfo.length; i++) { %>
+                
+                            <tr>
+                                <td><%= documentInfo[i].doc_name %></td>
+                                <td><%= documentInfo[i].folder_id[0].category_id[0].category_id %></td>
+                                <td><%= documentInfo[i].folder_id[0].folder_name %></td>
+                                <td><%= documentInfo[i].document_no %></td>
+                                <td><%= documentInfo[i].document_date.toLocaleDateString('en-US') %></td>
+                                <td>
+                                    <a href="/public/uploadedFile/<%= documentInfo[i].doc_name %>" target="_blank"><button type="submit" class="view_btn btn btn-outline-primary mx-1 mb-1"><i class="bi bi-eye-fill"></i></button></a>
+                                    <button type="button" class="del_btn btn btn-outline-danger mx-1 mb-1"><i class="bi bi-trash3-fill"></i></button>
+                                </td>
+                            </tr>   
+                            
+                        <% } %>
+                    
+                <% } else { %>
+                    <tr>
+                        <td colspan="9">No documents found</td>
+                    </tr>
+                <% } %>
+
+                <!-- for another object -->
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+    
+    <!--===== MAIN JS =====-->
+    <script src="../../public/JS/profile_sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"crossorigin="anonymous"></script>
+
+    <script src="../../public/jquery/jquery.js"></script>
+</body>
+
+</html>

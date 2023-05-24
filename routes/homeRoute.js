@@ -20,6 +20,7 @@ home_route.set('views', './views')
 // home_route.use("/student/edit",express.static(join(process.cwd(),"public")))
 
 home_route.get('/',auth.isLogout,homeController.getHomePage);
+home_route.get('/about_page',auth.isLogout,homeController.getAboutPage);
 
 
 

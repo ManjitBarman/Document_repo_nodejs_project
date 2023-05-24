@@ -74,7 +74,13 @@ admin_route.get('/admin_upload',auth.isLogin,adminController.uploadDocLoad);
 admin_route.get('/get_folders/:categoryId',auth.isLogin,adminController.getFoldersByCategory)
 admin_route.post('/admin_upload',upload.single('docname'),docValidation,adminController.adminUpload);
 admin_route.get('/doc_Details',auth.isLogin,adminController.docDetailsLoad);
+admin_route.get('/admin_search',auth.isLogin,adminController.adminSearchLoad);
+admin_route.post('/search_by_docno',adminController.searchByDocumentNo);
+admin_route.post('/search_by_keyword',adminController.searchByKeyword);
+admin_route.post('/search_by_filename',adminController.searchByFilename);
 
+
+// admin_route.get('/search_result',auth.isLogin,adminController.searchResultsLoad);
 
 
 

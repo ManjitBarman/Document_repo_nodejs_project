@@ -380,9 +380,9 @@ const uploadDocLoad = async (req, resp) => {
     try {
 
       const categories = await Category.find();
-      const folders = await Folder.find();
+    //   const folders = await Folder.find();
       const success = req.query.success === 'true';
-      resp.render('adminUpload', { categories, folders,success });
+      resp.render('adminUpload', { categories,success });
     } catch (error) {
       console.log(error.message);
     }
@@ -411,7 +411,7 @@ const adminUpload = async (req, resp) => {
 
         const categories = await Category.find(); // to fix error 
         if (!errors.isEmpty()) {
-            return resp.render('adminUpload', { message:'Please upload doc,jpeg,jpg orpdf',categories});
+            return resp.render('adminUpload', { message:'Please upload docx, jpeg, jpg or pdf',categories});
           }
 
 
@@ -498,6 +498,94 @@ const docDetailsLoad = async (req, resp) => {
     }
 };
 
+// admin search 
+const adminSearchLoad = async(req,resp)=>{
+    try {
+        resp.render('adminSearch')
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+// search by document no 
+
+const searchByDocumentNo = async (req, resp) => {
+    try {
+      const documentNo = req.body.docNo;
+
+      const documentData = await Document.find({ document_no: documentNo }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+
+      if(!documentData){
+
+        return resp.render('adminSearch', { message:'Enter a valid document number' });
+
+      }else{
+        return resp.render('adminSearch', {documentInfo:documentData, });
+
+      }
+  
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // search by Keyword
+
+  const searchByKeyword = async (req, resp) => {
+    try {
+      const documentKeyword = req.body.keyword;
+
+      const documentData = await Document.find({ keyword:documentKeyword  }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+  
+      return resp.render('adminSearch', {documentInfo:documentData});
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // search by Keyword
+
+  const searchByFilename = async (req, resp) => {
+    try {
+      const documentKeyword = req.body.filename;
+  
+      const documentData = await Document.find({ doc_name: { $regex: documentKeyword, $options: 'i' } }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+  
+      return resp.render('adminSearch', { documentInfo: documentData });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
+
+const searchResultsLoad=async(req,resp)=>{
+    try {
+        return resp.render('searchResult');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 
 
@@ -521,6 +609,11 @@ module.exports = {
     uploadDocLoad,
     adminUpload,
     getFoldersByCategory,
-    docDetailsLoad
+    docDetailsLoad,
+    adminSearchLoad,
+    searchByDocumentNo,
+    searchResultsLoad,
+    searchByKeyword,
+    searchByFilename
     
 }

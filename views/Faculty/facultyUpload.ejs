@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>upload</title>
+    <title>Faculty upload</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
@@ -55,7 +55,7 @@
     if(typeof message!=='undefined'){
       %>
       <div class=" alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Error....</strong> '<%=message  %>'
+          <strong> </strong> '<%=message  %>'
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -69,7 +69,7 @@
     if(typeof sucess!=='undefined'){
       %>
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Success..</strong> '<%=sucess  %>'.
+          <strong> </strong> '<%=sucess  %>'.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -79,17 +79,15 @@
      %>
 
 
-
-
     <div class="container card shadow mt-5">
         <section class="main">
             <div class="my-4 px-3">
-                <h4 style="color: blue;">Upload File</h4>
+                <h4 style="color: blue;">Upload Indivisual File</h4>
                 <hr class="mb-3">
             </div>
 
             <div class="form p-1 mb-1 ">
-                <form method="post" action="admin_upload" enctype="multipart/form-data"  >
+                <form method="post" action="faculty_upload" enctype="multipart/form-data"  >
 
                    
                     <div class="row mt-0">
@@ -152,16 +150,11 @@
                             <div class="form-group px-5 py-2">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <label for="catagory">Catagory</label>
+                                        <label for="document">Category</label>
                                     </div>
                                     <div class="col-sm-9">
-                                        <select id="category" name="catId" class="w-100 border-bottom border-secondary" style=" border-style: none; background:transparent">
-                                            <option value="category" disabled selected>Choose Catagory</option>
-                                            <% categories.forEach((item) => { %>
-                                                <option value="<%= item._id %>"><%= item.category_name %></option>            
-                                            <% }) %>
-                                          
-                                        </select>
+                                        <input type="text" class="form-control border-bottom border-secondary"
+                                            style=" border-style: none; background:transparent" name="catName" required value="PERSIONAL_FILES" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -175,6 +168,11 @@
                                         <select id="folder" name="foldId" class="w-100 border-bottom border-secondary"
                                             style=" border-style: none; background:transparent">
                                             <option value="folder" disabled selected>Choose Folder</option>
+                                            <% folders.forEach((folder)=>{ %>
+
+                                                <option value="<%= folder._id %>"><%= folder.folder_name %></option>
+
+                                            <% }) %>                                        
                                             
                                         </select>
                                     </div>
@@ -215,7 +213,7 @@
                                 <ul class="list">
                                     <li>File size maximum 16 MB</li>
                                     <li>File type should be jpeg,jpg and pdf</li>
-                                    <li>IIn case of student document insert rollno or programe for search</li>
+                                    <li>Select your own folder based on your name</li>
                                 </ul>
                             </div>
                         </div>
@@ -235,65 +233,40 @@
     <script>
         const categoryDropdown = document.getElementById('category');
         const folderDropdown = document.getElementById('folder');
-      
+
         // Event listener for category dropdown change
         categoryDropdown.addEventListener('change', function () {
-          const selectedCategoryId = categoryDropdown.value;
-      
-          // Clear the folder dropdown options
-          folderDropdown.innerHTML = '<option value=""  selected>Choose Folder</option>';
-      
-          // Fetch folders based on selected category using AJAX
-          fetch('get_folders/' + selectedCategoryId) // Update the URL to include the correct path
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-              return response.json();
-            })
-            .then(data => {
-              // Populate the folder dropdown with the fetched folders
-              data.folders.forEach(folder => {
-                const option = document.createElement('option');
-                option.value = folder._id;
-                option.textContent = folder.folder_name;
-                folderDropdown.appendChild(option);
-              });
-            })
-            .catch(error => {
-              console.log('Error:', error);
-              // Handle the error gracefully
-              // ...
-            });
-        });
-      </script>
+            const selectedCategoryId = categoryDropdown.value;
 
-<script>
-    $(document).ready(function () {
-      $('input[name="docname"]').on('change', function () {
-        const allowedExtensions = ['pdf', 'jpeg', 'jpg', 'docx'];
-        const maxFileSizeInBytes = 10 * 1024 * 1024; // 16MB
-  
-        const selectedFile = this.files[0];
-        const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
-        const fileSize = selectedFile.size;
-  
-        // Check file extension
-        if (!allowedExtensions.includes(fileExtension)) {
-          alert('Invalid file extension. Allowed extensions are: pdf, jpeg, jpg, doc');
-          $(this).val(''); // Clear the file input
-          return;
-        }
-  
-        // Check file size
-        if (fileSize > maxFileSizeInBytes) {
-          alert('File size exceeds the limit of 16MB');
-          $(this).val(''); // Clear the file input
-          return;
-        }
-      });
-    });
-  </script>
+            // Clear the folder dropdown options
+            folderDropdown.innerHTML = '<option value=""  selected>Choose Folder</option>';
+
+            // Fetch folders based on selected category using AJAX
+            fetch('get_folders/' + selectedCategoryId) // Update the URL to include the correct path
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Populate the folder dropdown with the fetched folders
+                    data.folders.forEach(folder => {
+                        const option = document.createElement('option');
+                        option.value = folder._id;
+                        option.textContent = folder.folder_name;
+                        folderDropdown.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                    // Handle the error gracefully
+                    // ...
+                });
+        });
+    </script>
+    
+    
   
 
 

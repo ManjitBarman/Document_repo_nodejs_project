@@ -20,6 +20,11 @@ app.use(express.json());
 //static file use 
 app.use('/public',express.static('public'))
 
+//static file for bootstrap
+
+// app.use("/css",express.static("node_modules/bootstrap/dist/css"));
+// app.use("/js",express.static("node_modules/bootstrap/dist/js"));
+
 //for load usrer route
 app.use('/CSE',homeRoute);
 app.use('/CSE/admin',adminRoute);
@@ -27,6 +32,10 @@ app.use('/CSE/staff',staffRoute);
 app.use('/CSE/faculty',facultyRoute);
 app.use('/CSE/hod',hodRoute);
 
+console.log(performance.now());
+
 app.listen(port, ()=>{
     console.log(`Server listen at http://localhost:${port}`)
 })
+
+
