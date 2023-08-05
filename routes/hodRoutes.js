@@ -58,18 +58,31 @@ const {docValidation} = require('../helper/validation')
 //admin route
 hod_route.get('/hod_login',auth.isLogout,hodController.loginLoad);
 hod_route.post('/hod_login',hodController.verifyLogin);
+
 hod_route.get('/hod_profile',auth.isLogin,hodController.profile_Load);
 hod_route.get('/hod_logout',auth.isLogin,hodController.hodLogout);
 hod_route.get('/add_user',auth.isLogin,hodController.addUserLoad);
+
 hod_route.get('/add_user',auth.isLogin,hodController.addUserLoad);
 hod_route.get('/add_user',auth.isLogin,hodController.addUserLoad);
 hod_route.post('/add_user',hodController.addUser);
+
 hod_route.get('/verify',hodController.verifyMail);
 hod_route.get('/show_user_list',auth.isLogin,hodController.userListLoad);
+
 hod_route.get('/hod_upload',auth.isLogin,hodController.uploadDocLoad);
 hod_route.get('/get_folders/:categoryId',auth.isLogin,hodController.getFoldersByCategory)
 hod_route.post('/hod_upload',upload.single('docname'),docValidation,hodController.hodUpload);
 
+hod_route.get('/hod_view',auth.isLogin,hodController.hodViewLoad);
+hod_route.post('/hod_view',auth.isLogin,hodController.hodView);
+
+hod_route.get('/hod_search',auth.isLogin,hodController.hodSearchLoad);
+hod_route.post('/search_by_docno',hodController.searchByDocumentNo);
+hod_route.post('/search_by_keyword',hodController.searchBykeyword);
+hod_route.post('/search_by_filename',hodController.searchByFilename);
+
+hod_route.get('/hod_dashboard',auth.isLogin,hodController.dashboardLoad)
 
 
 

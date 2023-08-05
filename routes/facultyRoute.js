@@ -65,6 +65,12 @@ faculty_route.get('/faculty_logout',auth.isLogin,facultyController.facultyLogout
 faculty_route.get('/faculty_upload',auth.isLogin,facultyController.uploadDocLoad);
 faculty_route.post('/faculty_upload',upload.single('docname'),docValidation,facultyController.facultyUpload);
 faculty_route.get('/faculty_search',auth.isLogin,facultyController.facultySearchLoad);
+faculty_route.post('/search_by_docno',facultyController.searchByDocumentNo);
+faculty_route.get('/faculty_view',auth.isLogin,facultyController.facultyViewLoad);
+faculty_route.get('/get_folders/:categoryId',auth.isLogin,facultyController.getFoldersByCategory);
+faculty_route.post('/faculty_view',auth.isLogin,facultyController.facultyView);
+
+
 
 
 

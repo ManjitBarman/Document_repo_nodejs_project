@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const randomString = require("randomstring");
 const nodemailer = require('nodemailer');
 const {validationResult}= require('express-validator');
+// const mongoose= require('mongoose')
 
 
 
@@ -83,19 +84,19 @@ const verifyLogin = async (req, resp) => {
             if (passwordMatch) {
 
                 if (!userData.is_admin) {
-                    resp.render('adminLogin', { message: "Please verify your mail" })
+                    return resp.render('adminLogin', { message: "Please verify your mail" })
                 } else {
 
                     req.session.user_id = userData._id;
-                    resp.redirect(302, 'admin_dashboard');
+                    return resp.redirect(302, 'admin_profile');
                 }
 
             } else {
-                resp.render('adminLogin', { message: "Email and password are incorect" });
+                return resp.render('adminLogin', { message: "Email and password are incorect" });
             }
 
         } else {
-            resp.render('adminLogin', { message: "Email and password are incorect" });
+            return resp.render('adminLogin', { message: "Email and password are incorect" });
         }
 
 
@@ -109,7 +110,7 @@ const profile_Load = async (req, resp) => {
     try {
 
         const adminData = await User.findById({ _id: req.session.user_id });
-        resp.render('adminProfile', { user: adminData })  //data send to user profile
+        return resp.render('adminProfile', { user: adminData })  //data send to user profile
     } catch {
         console.log(error.message);
     }
@@ -121,7 +122,7 @@ const profile_Load = async (req, resp) => {
 const addUserLoad = async (req, resp) => {
     try {
 
-        resp.render('addUser')  //data send to user profile
+        return resp.render('addUser')  //data send to user profile
     } catch {
         console.log(error.message);
     }
@@ -133,7 +134,7 @@ const addUserLoad = async (req, resp) => {
 const addOneUserLoad = async (req, resp) => {
     try {
 
-        resp.render('addOneUser')
+        return resp.render('addOneUser')
     } catch {
         console.log(error.message);
     }
@@ -157,7 +158,7 @@ const addUser = async (req, resp) => {
 
         if (existData) {
 
-            resp.render('addOneUser', { message: 'email or password is already exist' });
+            return resp.render('addOneUser', { message: 'email or password is already exist' });
 
         } else {
 
@@ -199,18 +200,32 @@ const verifyMail = async (req, resp) => {
         const updateInfo = await User.updateOne({ _id: req.query.id }, { $set: { is_verified: 'true' } });
 
         console.log(updateInfo);
-        resp.render("email-verified");
+        return resp.render("email-verified");
 
     } catch (error) {
         console.log(eror.message);
     }
 }
 
+//delete uaer 
+
+const deleteUser = async (req, resp) => {
+    try {
+      const userId = req.params.id;
+
+      const result= await User.deleteOne({_id: userId });
+      return resp.redirect("/CSE/admin/show_user_list");
+  
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
 //Load userlist
 const userListLoad = async (req, resp) => {
     try {
         const usersData = await User.find({ is_admin: 'false' })
-        resp.render('userList', { users: usersData });
+        return resp.render('userList', { users: usersData });
 
     } catch (error) {
         console.log(error.message);
@@ -246,7 +261,7 @@ const adminLogout = async (req, resp) => {
     try {
 
         req.session.destroy();
-        resp.redirect('/CSE');
+        return resp.redirect('/CSE');
 
     } catch (error) {
 
@@ -259,7 +274,7 @@ const adminLogout = async (req, resp) => {
 
 const CategoryLoad = async (req, resp) => {
     try {
-        resp.render('category');
+        return resp.render('category');
     } catch (error) {
         console.log(error.message)
     }
@@ -280,7 +295,7 @@ const addCategory = async (req, resp) => {
 
         if (existCatName || existCatId) {
 
-            resp.render('category', { message: 'Category name or number already exist' });
+            return resp.render('category', { message: 'Category name or number already exist' });
 
         } else {
 
@@ -295,10 +310,10 @@ const addCategory = async (req, resp) => {
 
             if (categoryData) {
 
-                resp.redirect(302, 'add_category');
+                return resp.redirect(302, 'add_category');
             } else {
 
-                resp.render('category', { message: 'try again something wrong ' })
+                return resp.render('category', { message: 'try again something wrong ' })
             }
         }
 
@@ -312,7 +327,7 @@ const addCategory = async (req, resp) => {
 const folderLoad = async (req, resp) => {
     try {
         const data = await Category.find()
-        resp.render('addFolder', { result: data });
+        return resp.render('addFolder', { result: data });
     } catch (error) {
         console.log(error.message)
     }
@@ -361,7 +376,7 @@ const addFolder = async (req, resp) => {
             const folderData = await folder.save();
 
             if (folderData) {
-                resp.redirect(302, 'add_user')
+                return resp.redirect(302, 'add_user')
 
             } else {
                return resp.render('addFolder', { message: 'try again something wrong ' })
@@ -382,7 +397,7 @@ const uploadDocLoad = async (req, resp) => {
       const categories = await Category.find();
     //   const folders = await Folder.find();
       const success = req.query.success === 'true';
-      resp.render('adminUpload', { categories,success });
+      return resp.render('adminUpload', { categories,success });
     } catch (error) {
       console.log(error.message);
     }
@@ -396,7 +411,7 @@ const getFoldersByCategory = async (req, res) => {
 
         res.setHeader('Content-Type', 'application/json');
     
-        res.status(200).json({ folders });
+        return res.status(200).json({ folders });
     } catch (error) {
       console.log(error.message);
       return res.status(500).json({ error: 'Internal server error' });
@@ -492,7 +507,64 @@ const docDetailsLoad = async (req, resp) => {
           });
         //   console.log(documentData)
 
-        resp.render('docDetails', { categoryData, folderData,documentData });
+        return resp.render('docDetails', { categoryData, folderData,documentData });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
+//delete doc 
+const deleteFile = async (req, resp) => {
+    try {
+      const docId = req.params.id;
+
+      const result= await Document.deleteOne({_id: docId });
+      return resp.redirect("/CSE/admin/doc_details");
+  
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+//category details
+const categoryDetailsLoad = async (req, resp) => {
+    try {
+        const categoryData = await Category.find(); 
+        //   console.log(documentData)
+
+        return resp.render('categoryDetails', { categoryData });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+const folderDetailsLoad = async (req, resp) => {
+    try {
+
+        const folderData = await Folder.find().populate('category_id');   
+        return resp.render('folderDetails', { folderData });
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+// view file 
+const viewDocLoad = async (req, resp) => {
+    try {
+        const documentId= req.params.id
+        // console.log(documentId);
+        const documentData = await Document.findOne({_id:documentId}).populate({
+            path: 'folder_id',
+            populate: {
+              path: 'category_id',
+              model: 'category',
+            },
+          });
+
+          console.log(documentData);
+
+       return resp.render('viewFile', {documentData });
     } catch (error) {
         console.log(error.message);
     }
@@ -557,7 +629,7 @@ const searchByDocumentNo = async (req, resp) => {
     }
   };
 
-  // search by Keyword
+  // search by filename
 
   const searchByFilename = async (req, resp) => {
     try {
@@ -614,6 +686,11 @@ module.exports = {
     searchByDocumentNo,
     searchResultsLoad,
     searchByKeyword,
-    searchByFilename
+    searchByFilename,
+    categoryDetailsLoad,
+    folderDetailsLoad,
+    viewDocLoad,
+    deleteUser,
+    deleteFile
     
 }

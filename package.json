@@ -9,7 +9,7 @@
   "author": "manjit",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.2.3",
     "ejs": "^3.1.9",

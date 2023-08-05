@@ -194,12 +194,107 @@ const staffSearchLoad = async(req,resp)=>{
 const staffViewLoad= async(req,resp)=>{
     try {
 
-        return resp.render('staffView')
+        const categories = await Category.find();
+        return resp.render('staffView',{categories})
         
     } catch (error) {
         console.log(error.message);
     }
 }
+
+const staffView= async(req,resp)=>{
+    try {
+
+        const categoryId= req.body.catId;
+        const folderId= req.body.foldId;
+        const categories = await Category.find(); //to fix error
+
+        // console.log(folderId);
+
+        const documentInfo = await Document.find({ folder_id: folderId }).populate({
+            path: 'folder_id',
+            populate: {
+              path: 'category_id',
+              model: 'category',
+            },
+          });
+
+
+        return resp.render('staffView',{documentInfo,categories})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const searchByDocumentNo = async (req, resp) => {
+    try {
+      const documentNo = req.body.docNo;
+
+      const documentData = await Document.find({ document_no: documentNo }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+
+      if(!documentData){
+
+        return resp.render('staffSearch', { message:'Enter a valid document number' });
+
+      }else{
+        return resp.render('staffSearch', {documentInfo:documentData, });
+
+      }
+  
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // search by Keyword
+
+  const searchByKeyword = async (req, resp) => {
+    try {
+      const documentKeyword = req.body.keyword;
+
+      
+      const documentData = await Document.find({ keyword: { $regex: documentKeyword, $options: 'i' } }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+  
+      return resp.render('staffSearch', {documentInfo:documentData});
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // search by filename
+
+  const searchByFilename = async (req, resp) => {
+    try {
+      const documentFilename = req.body.filename;
+  
+      const documentData = await Document.find({ doc_name: { $regex: documentFilename, $options: 'i' } }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+  
+      return resp.render('staffSearch', { documentInfo: documentData });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
 
 
 module.exports = {
@@ -211,6 +306,11 @@ module.exports = {
     staffUpload,
     getFoldersByCategory,
     staffSearchLoad,
-    staffViewLoad
+    staffViewLoad,
+    staffView,
+    searchByDocumentNo,
+    searchByKeyword,
+    searchByFilename
+    
     
 }

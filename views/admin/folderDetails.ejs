@@ -13,7 +13,7 @@
     <!-- bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-     
+
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
 
     <!-- link for data table  -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <title>Document Details</title>
+    <title>Folder Details</title>
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <style> 
@@ -49,80 +49,63 @@
 </head>
 
 <body id="body-pd">
-
     <%- include('./layouts/navbar') %>
-    
-    
-    <!-- File Details -->
-    <div class="container my-5">
-        <h3 class="py-3">Document Details</h3>
-        <table class="table" id="doc_table">
+
+    <!-- Folder details  -->
+
+    <div class="container my-5" >
+        <h3 class="py-3">Folder Details with Category</h3>
+        <table class="table" id="folder_table">
             <thead>
                 <tr style="font-family: 'Ubuntu', sans-serif;">
                     <th scope="col">S.No</th>
-                    <th scope="col">Doc Name</th>
-                    <th scope="col">Category No</th>
+                    <th scope="col">Category Name</th>
                     <th scope="col">Folder Name</th>
-                    <th scope="col">Document No</th>
-                    <th scope="col">Document Date</th>
-                    <th scope="col">Size</th>
+                    <th scope="col">Folder No</th>
+                    <th scope="col">Date of creation</th>
                     <th scope="col">Action</th>
                 </tr>
-        </thead>
+            </thead>
+            <tbody>
 
-         <tbody>
-             <% var j = 1 %>
-             <% if (documentData.length > 0) { %>
-             <% for (let i = 0; i < documentData.length; i++) { %>
-          <tr>
-            <td scope="col"><%= j++ %></td>
-            <td><%= documentData[i].doc_name %></td>
-            <td><%= documentData[i].folder_id[0].category_id[0].category_name %></td>
-            <td><%= documentData[i].folder_id[0].folder_name %></td>
-            <td><%= documentData[i].document_no %></td>
-            <td><%= documentData[i].document_date.toLocaleDateString('en-US') %></td>
-            <td>
-                <% 
-                const size = documentData[i].doc_size;
-                let formattedSize = '';
-                if (size < 1024) {
-                  formattedSize = size + ' B';
-                } else if (size < 1024 * 1024) {
-                  formattedSize = (size / 1024).toFixed(2) + ' KB';
-                } else {
-                  formattedSize = (size / (1024 * 1024)).toFixed(2) + ' MB';
-                }
-              %>
-              <%= formattedSize %>
-            </td>
+                <% var j = 1 %>
+                <% if (folderData.length> 0) {
+                for (i = 0; i < folderData.length; i++) { %>
+            <tr>
+                <td scope="col"><%= j++ %></td>
+                <% if (folderData[i].category_id && folderData[i].category_id.length > 0) { %>
+                <td><%= folderData[i].category_id[0].category_name %></td>
+                 <% } else { %>
+                <td>N/A</td>
 
+                <% } %>
+                <td><%= folderData[i].folder_name %></td>
+                <td><%= folderData[i].folder_no %></td>
+                <td><%= folderData[i].folder_date.toLocaleDateString('en-US') %> 
+                <%= folderData[i].folder_date.toLocaleTimeString('en-US') %></td>
+            
+                <td> <a href=""><button type="submit" class="edit_btn btn btn-outline-success mx-1 mb-1"><i class="bi bi-pen-fill"></i></button></a>
+                <button type="button" class="del_btn btn btn-outline-danger mx-1 mb-1"><i class="bi bi-trash3-fill"></i></button></td>
+            
+            </tr>
+             <% }
+            } else { %>
 
-            <td>
-                <a href="view_file/<%= documentData[i]._id %>" target="_blank"><button type="submit" class="view_btn btn btn-outline-primary mx-1 mb-1"><i class="bi bi-eye-fill"></i></button></a>
-                <!-- <a href="/public/uploadedFile/<%= documentData[i].doc_name %>" target="_blank"><button type="submit" class="view_btn btn btn-outline-primary mx-1 mb-1"><i class="bi bi-eye-fill"></i></button></a> -->
-
-                <a href="#" onclick="confirmDelete(event, '<%= documentData[i]._id %>')"><button type="button" class="del_btn btn btn-outline-danger mx-1 mb-1"><i class="bi bi-trash3-fill"></i></button></a>
-            </td>
-          </tr>
+            <tr>
+               <td colspan="6">Folders Not Found</td>
+            </tr>
         <% } %>
-      <% } else { %>
-        <tr>
-          <td colspan="9">No documents found</td>
-        </tr>
-      <% } %>
-              
+
+            </tbody>
         </table>
     </div>
-
+ 
 
 
     <!--===== MAIN JS =====-->
     <script src="../../public/JS/profile_sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <script src="../../public/jquery/jquery.js"></script>
-    <!-- sweet alert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <!-- <script src="../script/change_password.js"></script>
     <script src="../script/update_profile.js"></script> -->
 
@@ -131,42 +114,10 @@
     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#category_table').DataTable();
-        });
-
-        $(document).ready(function() {
             $('#folder_table').DataTable();
-        });
-        $(document).ready(function() {
-            $('#doc_table').DataTable();
         });
 
     </script>
-    
-    <!-- sweet alert script -->
-    
-    <script>
-      function confirmDelete(event, docId) {
-          event.preventDefault(); // Prevent the default anchor behavior
-
-          Swal.fire({
-              title: 'Are you sure?',
-              text: 'You are about to delete this user.',
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#d33',
-              cancelButtonColor: '#3085d6',
-              confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  const deleteUrl = `delete_file/${docId}`;
-                  window.location.href = deleteUrl; // Proceed with the deletion
-              }
-          });
-      }
-
-
-  </script>
 
     <!-- for kb and MB -->
     <script>

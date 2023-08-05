@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>view </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- ===== BOX ICONS ===== -->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Ubuntu:wght@300;500&display=swap"
+        rel="stylesheet">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="../../public/css/profile_sidebar.css">
+    <link rel="stylesheet" href="../../public/css/bg_color.css">
+    <link rel="stylesheet" href="../../public/css/button.css">
+    <link rel="stylesheet" href="../style/popup_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style>
+        div .instruction {
+            margin-left: 10%;
+        }
+    </style>
+
+</head>
+
+<body id="body-pd">
+
+    <div class="container">
+        <div class="card shadow mt-5">
+            <section class="main">
+                <div class="mt-4 px-3">
+                    <h5 style="color: #4d4def; font-weight: bold;">View Document</h5>
+                    <hr class="mb-2">
+                </div>
+    
+                <div class="form p-4">
+                    <div class="row m-3">
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label for="documentName" class="form-label">Document Name</label>
+                                <input type="text" class="form-control bg-light" placeholder="<%= documentData.doc_name %>"
+                                    disabled>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="documentTitle" class="form-label">Document Title</label>
+                                <input type="text" class="form-control bg-light" placeholder="<%= documentData.doc_title %>"
+                                    disabled>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="documentNumber" class="form-label">Document Number</label>
+                                <input type="text" class="form-control bg-light" placeholder="<%= documentData.document_no %>"
+                                    disabled>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-6">
+                            <div class="mb-3">
+                                <label for="uploadDate" class="form-label">Upload Date</label>
+                                <input type="text" class="form-control bg-light" placeholder="<%= documentData.document_date %>"
+                                    disabled>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="categoryNumber" class="form-label">Category Number</label>
+                                <input type="text" class="form-control bg-light"
+                                    placeholder="<%= documentData.folder_id[0].category_id[0].category_name %>" disabled>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="folderName" class="form-label">Folder Name</label>
+                                <input type="text" class="form-control bg-light"
+                                    placeholder="<%= documentData.folder_id[0].folder_name %>" disabled>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="px-5 my-3">
+                            <% if (documentData.file_path.toLowerCase().endsWith(".pdf")) { %>
+                            <embed src="/public/uploadedFile/<%= documentData.doc_name %>"
+                                style="width: 100%; height: 500px; max-width: 100%; max-height: 500px;"
+                                type="application/pdf">
+                            <% } else { %>
+                            <img style="max-width: 100%; max-height: 500px;"
+                                src="/public/uploadedFile/<%= documentData.doc_name %>" />
+                            <% } %>
+                        </div>
+                    </div>
+    
+                    <div class="row mt-4">
+                        <div class="col-sm-12 d-flex justify-content-end">
+                            <a href="#" class="btn btn-outline-primary mx-2" onclick="history.go(-1)">
+                                Back
+                            </a>
+                            <a href="/public/uploadedFile/<%= documentData.doc_name %>"
+                                class="btn btn-primary mx-2" download>
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    
+    
+
+        <script src="../../public/JS/profile_sidebar.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="../script/jquery.js"></script>
+        <!-- <script>
+  // Download button click event
+  document.getElementById("downloadBtn").addEventListener("click", function () {
+      // Perform the download logic here
+      // For example, you can redirect the user to a download URL or use AJAX to initiate the download
+      // Replace the URL below with your download endpoint
+      window.location.href = "/download?url=" + "<%= documentData.documentPath %>";
+  });
+
+  // Print button click event
+  document.getElementById("printBtn").addEventListener("click", function () {
+      // Perform the print logic here
+      // For example, you can use JavaScript's print() function to print the document
+      window.print();
+  });
+</script> -->
+
+
+</body>
+
+</html>

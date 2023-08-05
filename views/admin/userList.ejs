@@ -133,9 +133,10 @@
                                 <%
                             }
                              %></td>
-                        <td><button type="button" class="view_btn btn btn-outline-primary mx-1 mb-1"><i class="bi bi-eye-fill"></i></button>
+                            <td>
                             <a href="edit_user"><button type="submit"  class="edit_btn btn btn-outline-success mx-1 mb-1" ><i class="bi bi-pen-fill"></i></button></a>
-                            <button type="button" class="del_btn btn btn-outline-danger mx-1 mb-1"><i class="bi bi-trash3-fill"></i></button></td>
+                            <a href="#"  onclick="confirmDelete(event, '<%= users[i]._id %>')"><button type="button" class="del_btn btn btn-outline-danger mx-1 mb-1"><i class="bi bi-trash3-fill"></i></button></a>
+                        </td>
                     </tr>
                 <%
                 }
@@ -167,6 +168,9 @@
     <!-- script for data table -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         $(document).ready(function() {
             $('#user_table').DataTable();
@@ -178,25 +182,29 @@
 
     </script>
 
-    <!-- normal script -->
+    <!-- sweet alert script -->
     
     <script>
-        $(document).ready(function() {
-            // script for logout
-            $("#edituser").click(function() {
-                window.location.replace("edit_user");
-            })
+        function confirmDelete(event, userId) {
+            event.preventDefault(); // Prevent the default anchor behavior
 
-            $("#add_student_one").click(function() {
-                window.location.replace("");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to delete this user.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const deleteUrl = `delete_user/${userId}`;
+                    window.location.href = deleteUrl; // Proceed with the deletion
+                }
+            });
+        }
 
-            })
 
-            $("#add_mentor_one").click(function() {
-                window.location.replace(" ");
-
-            })
-        })
     </script>
 </body>
 

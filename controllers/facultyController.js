@@ -182,6 +182,85 @@ const facultySearchLoad = async(req,resp)=>{
     }
 }
 
+const searchByDocumentNo = async (req, resp) => {
+    try {
+      const documentNo = req.body.docNo;
+
+      const documentData = await Document.find({ document_no: documentNo }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+
+      if(!documentData){
+
+        return resp.render('facultySearch', { message:'Enter a valid document number' });
+
+      }else{
+        return resp.render('facultySearch', {documentInfo:documentData, });
+
+      }
+  
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+// view document
+  const facultyViewLoad= async(req,resp)=>{
+    try {
+
+        const categories = await Category.find();
+        return resp.render('facultyView',{categories})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+// for dynamic loading
+const getFoldersByCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        const folders = await Folder.find({ category_id: categoryId }).exec();
+
+        res.setHeader('Content-Type', 'application/json');
+    
+        return res.status(200).json({ folders });
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+// fetch view document based on category and folder
+const facultyView= async(req,resp)=>{
+    try {
+
+        const categoryId= req.body.catId;
+        const folderId= req.body.foldId;
+        const categories = await Category.find(); //to fix error
+
+        // console.log(folderId);
+
+        const documentInfo = await Document.find({ folder_id: folderId }).populate({
+            path: 'folder_id',
+            populate: {
+              path: 'category_id',
+              model: 'category',
+            },
+          })
+
+         return resp.render('facultyView',{documentInfo,categories})      
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 module.exports = {
     loginLoad,
@@ -190,5 +269,9 @@ module.exports = {
     facultyLogout,
     uploadDocLoad,
     facultyUpload,
-    facultySearchLoad
+    facultySearchLoad,
+    searchByDocumentNo,
+    facultyViewLoad,
+    getFoldersByCategory,
+    facultyView
 }

@@ -58,26 +58,42 @@ const {docValidation} = require('../helper/validation')
 //admin route
 admin_route.get('/admin_login',auth.isLogout,adminController.loginLoad);
 admin_route.post('/admin_login',adminController.verifyLogin);
-admin_route.get('/admin_dashboard',auth.isLogin,adminController.profile_Load);
+admin_route.get('/admin_profile',auth.isLogin,adminController.profile_Load);
 admin_route.get('/admin_logout',auth.isLogin,adminController.adminLogout);
+
 admin_route.get('/add_user',auth.isLogin,adminController.addUserLoad);
 admin_route.get('/add_one_user',auth.isLogin,adminController.addOneUserLoad);
 admin_route.post('/add_one_user',adminController.addUser);
 admin_route.get('/verify',adminController.verifyMail);
 admin_route.get('/show_user_list',auth.isLogin,adminController.userListLoad);
+
 admin_route.get('/edit_user',auth.isLogin,adminController.editUserLoad);
+admin_route.get('/delete_user/:id',auth.isLogin,adminController.deleteUser);
+
 admin_route.get('/add_category',auth.isLogin,adminController.CategoryLoad);
 admin_route.post('/add_category',adminController.addCategory);
 admin_route.get('/add_folder',auth.isLogin,adminController.folderLoad);
 admin_route.post('/add_folder',adminController.addFolder); 
+
 admin_route.get('/admin_upload',auth.isLogin,adminController.uploadDocLoad);
 admin_route.get('/get_folders/:categoryId',auth.isLogin,adminController.getFoldersByCategory)
 admin_route.post('/admin_upload',upload.single('docname'),docValidation,adminController.adminUpload);
-admin_route.get('/doc_Details',auth.isLogin,adminController.docDetailsLoad);
+
+admin_route.get('/doc_details',auth.isLogin,adminController.docDetailsLoad);
+admin_route.get('/category_details',auth.isLogin,adminController.categoryDetailsLoad);
+admin_route.get('/folder_details',auth.isLogin,adminController.folderDetailsLoad);
+
 admin_route.get('/admin_search',auth.isLogin,adminController.adminSearchLoad);
 admin_route.post('/search_by_docno',adminController.searchByDocumentNo);
 admin_route.post('/search_by_keyword',adminController.searchByKeyword);
 admin_route.post('/search_by_filename',adminController.searchByFilename);
+
+admin_route.get('/view_file/:id', auth.isLogin, adminController.viewDocLoad).set('name', 'view_file');
+admin_route.get('/delete_file/:id',auth.isLogin,adminController.deleteFile);
+
+
+
+
 
 
 // admin_route.get('/search_result',auth.isLogin,adminController.searchResultsLoad);

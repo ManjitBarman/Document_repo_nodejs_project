@@ -1,3 +1,11 @@
+<style>
+    .move{
+        position: relative;
+        left:39px;
+       
+    }
+    
+</style>
 <header class="header" id="header">
     <div class="header__toggle">
         <i class="bx bx-menu" id="header-toggle"></i>
@@ -16,29 +24,44 @@
                 <span class="nav__logo-name">ADMIN</span>
             </a>
             <div class="nav__list">
-                <a href="admin_dashboard" class="nav__link">
+                <a href="admin_profile" class="nav__link">
                     <i class="bi bi-person-circle"></i>
                     <span class="nav__name">Profile</span>
                 </a>
                 <a href="add_user" class="nav__link">
-                    <i class="bi bi-person-plus-fill"></i>
+                    <i class="bi bi-pen-fill"></i>
                     <span class="nav__name">Add Data</span>
                 </a>
                 <a href="" class="nav__link">
-                    <i class="bi bi-server"></i>
-                    <span class="nav__name">Database</span>
+                    <i class="bi bi-speedometer2"></i>
+                    <span class="nav__name">Dashboard</span>
                 </a>
-                <a href="doc_details" class="nav__link">
-                    <i class="bi bi-question-square-fill"></i>
-                    <span class="nav__name">File Information</span>
-                </a>
+                <!-- <a href="category_details" class="nav__link">
+                    <i class="bx bx-list-check nav__icon"></i>
+                    <span class="nav__name">Category Details</Details></span>
+                </a> -->
+                <li class="nav-item ">
+                    <a class="nav__link" data-bs-toggle="collapse" href="#file" aria-expanded="false" aria-controls="file">
+                        <i class="bi bi-server"></i>
+                        <span class="nav__name">File information</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse move" id="file">
+                        <ul class="nav flex-column sub-menu">
+                            <li class=" nav-item icon"> <a class="nav__link" href="category_details" >Category details</a> </li>
+                            <li class=" nav-item icon"> <a class="nav__link" href="folder_details ">Folder details</a> </li>
+                            <li class=" nav-item icon"> <a class="nav__link" href="doc_details ">Document details</a> </li>
+                        </ul>
+                        </ul>
+                    </div>
+                </li>
                 <a href="admin_upload" class="nav__link">
                     <i class="bx bx-file nav__icon"></i>
                     <span class="nav__name">Upload Doc</span>
                 </a>
                 <a href="show_user_list" class="nav__link">
                     <i class="bx bx-list-check nav__icon"></i>
-                    <span class="nav__name">List</span>
+                    <span class="nav__name">User `List</span>
                 </a>
                 <a href="admin_search" class="nav__link">
                     <i class="bx bx-search nav__icon"></i>
@@ -56,3 +79,6 @@
             </a>
     </nav>
 </div>
+
+
+

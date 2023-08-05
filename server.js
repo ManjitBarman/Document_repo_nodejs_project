@@ -15,7 +15,7 @@ const hodRoute = require("./routes/hodRoutes");
 //database connection 
 connectDB(DATABASE_URL);
 
-app.use(express.json());
+app.use(express.json());  
 
 //static file use 
 app.use('/public',express.static('public'))

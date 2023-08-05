@@ -65,10 +65,11 @@ staff_route.get('/staff_upload',auth.isLogin,staffController.uploadDocLoad);
 staff_route.get('/get_folders/:categoryId',auth.isLogin,staffController.getFoldersByCategory)
 staff_route.post('/staff_upload',upload.single('docname'),docValidation,staffController.staffUpload);
 staff_route.get('/staff_search',auth.isLogin,staffController.staffSearchLoad);
+staff_route.post('/search_by_docno',auth.isLogin,staffController.searchByDocumentNo);
+staff_route.post('/search_by_keyword',auth.isLogin,staffController.searchByKeyword);
+staff_route.post('/search_by_filename',auth.isLogin,staffController.searchByFilename);
 staff_route.get('/staff_view',auth.isLogin,staffController.staffViewLoad);
-
-
-
+staff_route.post('/staff_view',auth.isLogin,staffController.staffView);
 
 
 

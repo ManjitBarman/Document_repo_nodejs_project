@@ -95,7 +95,7 @@
     </div> -->
     
     <div class="container my-5">
-        <table class="table" id="student_table">
+        <table class="table" id="user_table">
             <thead>
                 <tr style="font-family: 'Ubuntu', sans-serif;">
                     <th scope="col">S.No</th>
@@ -131,7 +131,7 @@
                                     <%
                                 }
                                  %></td>
-                            <td><button type="button" class="view_btn btn btn-outline-primary mx-1 mb-1"><i class="bi bi-eye-fill"></i></button>
+                            <td>
                                 <a href="edit_user"><button type="submit"  class="edit_btn btn btn-outline-success mx-1 mb-1" ><i class="bi bi-pen-fill"></i></button></a>
                                 <button type="button" class="del_btn btn btn-outline-danger mx-1 mb-1"><i class="bi bi-trash3-fill"></i></button></td>
                         </tr>
@@ -162,7 +162,7 @@
     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#student_table').DataTable();
+            $('#user_table').DataTable();
         });
 
         $(document).ready(function() {

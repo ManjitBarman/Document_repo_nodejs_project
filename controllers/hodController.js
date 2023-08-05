@@ -319,6 +319,135 @@ const hodUpload = async (req, resp) => {
        
 };
 
+// view document
+const hodViewLoad= async(req,resp)=>{
+    try {
+
+        const categories = await Category.find();
+        return resp.render('hodView',{categories})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+//hod view
+const hodView= async(req,resp)=>{
+    try {
+
+        const categoryId= req.body.catId;
+        const folderId= req.body.foldId;
+        const categories = await Category.find(); //to fix error
+
+        // console.log(folderId);
+
+        const documentInfo = await Document.find({ folder_id: folderId }).populate({
+            path: 'folder_id',
+            populate: {
+              path: 'category_id',
+              model: 'category',
+            },
+          })
+
+         return resp.render('hodView',{documentInfo,categories})      
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+// faculty search 
+const hodSearchLoad = async(req,resp)=>{
+    try {
+        resp.render('hodSearch')
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const searchByDocumentNo = async (req, resp) => {
+    try {
+      const documentNo = req.body.docNo;
+
+      const documentData = await Document.find({ document_no: documentNo }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+
+      if(!documentData){
+
+        return resp.render('hodSearch', { message:'Enter a valid document number' });
+
+      }else{
+        return resp.render('hodSearch', {documentInfo:documentData, });
+
+      }
+  
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  //search by
+
+  const searchBykeyword = async (req, resp) => {
+    try {
+      const documentKeyword = req.body.keyword;
+  
+      const documentData = await Document.find({ keyword: { $regex: documentKeyword, $options: 'i' } }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+  
+      return resp.render('hodSearch', { documentInfo: documentData });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const searchByFilename = async (req, resp) => {
+    try {
+      const documentFilename = req.body.filename;
+  
+      const documentData = await Document.find({ doc_name: { $regex: documentFilename, $options: 'i' } }).populate({
+        path: 'folder_id',
+        populate: {
+          path: 'category_id',
+          model: 'category',
+        },
+      });
+  
+      return resp.render('hodSearch', { documentInfo: documentData });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  //dashboard 
+
+  const dashboardLoad=async(req,resp)=>{
+    try {
+        const categoryCount= await Category.countDocuments();
+        const folderCount= await Folder.countDocuments();
+        const userCount= await User.countDocuments();
+        const documentCount= await Document.countDocuments();
+        // console.log(categoryCount);
+        return resp.render('hodDashboard',{categoryCount,folderCount,userCount,documentCount})
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
+
+
+
 module.exports = {
     loginLoad,
     verifyLogin,
@@ -330,7 +459,15 @@ module.exports = {
     verifyMail,
     uploadDocLoad,
     getFoldersByCategory,
-    hodUpload
+    hodUpload,
+    hodViewLoad,
+    hodView,
+    hodSearchLoad,
+    searchByDocumentNo,
+    dashboardLoad,
+    searchBykeyword,
+    searchByFilename
+    
     
     
 }
